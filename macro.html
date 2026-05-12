@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Macro Ölçər — GymBro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0e0e;
+      --surface: #181818;
+      --surface2: #222222;
+      --border: #2a2a2a;
+      --accent: #e63946;
+      --accent2: #ff6b35;
+      --text: #f0f0f0;
+      --muted: #888;
+      --protein: #4fc3f7;
+      --carb: #ffb74d;
+      --fat: #ef5350;
+      --cal: #a5d6a7;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      border-bottom: 1px solid var(--border);
+      background: #0e0e0ecc;
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--text); }
+    nav a.back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav a.back:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 70px 20px 40px;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse at center, rgba(230,57,70,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(230,57,70,0.12);
+      border: 1px solid rgba(230,57,70,0.3);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 8vw, 96px);
+      letter-spacing: 4px;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* MAIN LAYOUT */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px 20px 80px;
+    }
+
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 700px) {
+      .calculator-grid { grid-template-columns: 1fr; }
+    }
+
+    /* FORM CARD */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    input[type="number"] {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="number"]:focus {
+      border-color: var(--accent);
+    }
+    input[type="number"]::placeholder { color: #444; }
+
+    .radio-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .radio-group input { display: none; }
+    .radio-group label {
+      flex: 1;
+      min-width: 80px;
+      text-align: center;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 8px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--muted);
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+    .radio-group input:checked + label {
+      background: rgba(230,57,70,0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .radio-group label:hover {
+      border-color: #444;
+      color: var(--text);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--accent);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 3px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn:hover {
+      background: #c1121f;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(230,57,70,0.35);
+    }
+    .btn:active { transform: translateY(0); }
+
+    /* RESULTS */
+    .results {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .results.show { display: flex; }
+
+    .result-placeholder {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      padding: 60px 28px;
+      text-align: center;
+    }
+    .result-placeholder .icon { font-size: 48px; margin-bottom: 16px; }
+    .result-placeholder p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    /* Calorie big card */
+    .cal-card {
+      background: linear-gradient(135deg, #1a0a0b 0%, #2d1010 100%);
+      border: 1px solid rgba(230,57,70,0.3);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cal-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 150px; height: 150px;
+      background: rgba(230,57,70,0.08);
+      border-radius: 50%;
+    }
+    .cal-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(230,57,70,0.7);
+      margin-bottom: 8px;
+    }
+    .cal-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 72px;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: 2px;
+    }
+    .cal-unit {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* Macro bars */
+    .macro-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+    }
+    .macro-item {
+      margin-bottom: 20px;
+    }
+    .macro-item:last-child { margin-bottom: 0; }
+    .macro-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+    .macro-name {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .macro-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+    .macro-val span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0;
+    }
+    .bar-bg {
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.8s cubic-bezier(0.16,1,0.3,1);
+      width: 0%;
+    }
+
+    /* Tip card */
+    .tip-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .tip-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+    .tip-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .tip-text strong { color: var(--text); }
+
+    /* BMR info */
+    .bmr-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .bmr-row:last-child { border-bottom: none; }
+    .bmr-row strong { color: var(--text); }
+
+    /* animate in */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate { animation: fadeUp 0.5s ease forwards; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Gym<span>Bro</span></a>
+  <a href="index.html" class="back">← Ana Səhifə</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Pulsuz Alət</div>
+  <h1>MACRO <span>ÖLÇƏR</span></h1>
+  <p>Gündəlik kalori və makro qida dəyərlərini hesabla. Məqsədinə uyğun yemək planı qur.</p>
+</div>
+
+<div class="container">
+  <div class="calculator-grid">
+
+    <!-- FORM -->
+    <div class="card">
+      <div class="card-title"><div class="dot"></div> Məlumatlarını Daxil Et</div>
+
+      <div class="form-group">
+        <label>Cins</label>
+        <div class="radio-group">
+          <input type="radio" name="gender" id="male" value="male" checked>
+          <label for="male">Kişi</label>
+          <input type="radio" name="gender" id="female" value="female">
+          <label for="female">Qadın</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Yaş</label>
+        <input type="number" id="age" placeholder="məs: 25" min="10" max="100">
+      </div>
+
+      <div class="form-group">
+        <label>Boy (sm)</label>
+        <input type="number" id="height" placeholder="məs: 178" min="100" max="250">
+      </div>
+
+      <div class="form-group">
+        <label>Çəki (kq)</label>
+        <input type="number" id="weight" placeholder="məs: 75" min="30" max="300">
+      </div>
+
+      <div class="form-group">
+        <label>Aktivlik Səviyyəsi</label>
+        <div class="radio-group" style="flex-direction: column;">
+          <input type="radio" name="activity" id="a1" value="1.2" checked>
+          <label for="a1" style="min-width:unset; text-align:left; padding: 10px 14px;">Oturaq (idmansız)</label>
+          <input type="radio" name="activity" id="a2" value="1.375">
+          <label for="a2" style="min-width:unset; text-align:left; padding: 10px 14px;">Az aktiv (həftədə 1-3 gün)</label>
+          <input type="radio" name="activity" id="a3" value="1.55">
+          <label for="a3" style="min-width:unset; text-align:left; padding: 10px 14px;">Orta aktiv (həftədə 3-5 gün)</label>
+          <input type="radio" name="activity" id="a4" value="1.725">
+          <label for="a4" style="min-width:unset; text-align:left; padding: 10px 14px;">Çox aktiv (həftədə 6-7 gün)</label>
+          <input type="radio" name="activity" id="a5" value="1.9">
+          <label for="a5" style="min-width:unset; text-align:left; padding: 10px 14px;">Atlet / Ağır iş</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Məqsəd</label>
+        <div class="radio-group">
+          <input type="radio" name="goal" id="lose" value="lose">
+          <label for="lose">Arıqla</label>
+          <input type="radio" name="goal" id="maintain" value="maintain" checked>
+          <label for="maintain">Saxla</label>
+          <input type="radio" name="goal" id="gain" value="gain">
+          <label for="gain">Kütlə qaz</label>
+        </div>
+      </div>
+
+      <button class="btn" onclick="calculate()">HESABLA</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div>
+      <!-- placeholder -->
+      <div class="result-placeholder" id="placeholder">
+        <div class="icon">🧮</div>
+        <p>Məlumatlarını doldur və <strong style="color:var(--text)">HESABLA</strong> düyməsinə bas.<br>Gündəlik makro dəyərlərin burada görünəcək.</p>
+      </div>
+
+      <!-- actual results -->
+      <div class="results" id="results">
+
+        <div class="cal-card animate" id="calCard">
+          <div class="cal-label">Gündəlik Kalori</div>
+          <div class="cal-number" id="calNum">—</div>
+          <div class="cal-unit">kkal / gün</div>
+        </div>
+
+        <div class="macro-card animate" style="animation-delay:0.1s">
+          <div class="macro-item">
+            <div class="macro-header">
+              <div class="macro-name" style="color:var(--protein)">Protein</div>
+              <div class="macro-val" style="color:var(--protein)" id="proteinVal">—<span> q/gün</span></div>
+            </div>
+            <div class="bar-bg"><div class="bar-fill" id="proteinBar" style="background:var(--protein)"></div></div>
+          </div>
+          <div class="macro-item">
+            <div class="macro-header">
+              <div class="macro-name" style="color:var(--carb)">Karbohidrat</div>
+              <div class="macro-val" style="color:var(--carb)" id="carbVal">—<span> q/gün</span></div>
+            </div>
+            <div class="bar-bg"><div class="bar-fill" id="carbBar" style="background:var(--carb)"></div></div>
+          </div>
+          <div class="macro-item">
+            <div class="macro-header">
+              <div class="macro-name" style="color:var(--fat)">Yağ</div>
+              <div class="macro-val" style="color:var(--fat)" id="fatVal">—<span> q/gün</span></div>
+            </div>
+            <div class="bar-bg"><div class="bar-fill" id="fatBar" style="background:var(--fat)"></div></div>
+          </div>
+        </div>
+
+        <div class="macro-card animate" style="animation-delay:0.2s" id="bmrInfo">
+          <div class="bmr-row"><span>Bazal Metabolizm (BMR)</span><strong id="bmrVal">—</strong></div>
+          <div class="bmr-row"><span>Aktivlikə görə kalori (TDEE)</span><strong id="tdeeVal">—</strong></div>
+          <div class="bmr-row"><span>Məqsəd korreksiyası</span><strong id="goalVal">—</strong></div>
+        </div>
+
+        <div class="tip-card animate" style="animation-delay:0.3s" id="tipCard">
+          <div class="tip-icon">💡</div>
+          <div class="tip-text" id="tipText">—</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function calculate() {
+  const gender = document.querySelector('input[name="gender"]:checked').value;
+  const age    = parseFloat(document.getElementById('age').value);
+  const height = parseFloat(document.getElementById('height').value);
+  const weight = parseFloat(document.getElementById('weight').value);
+  const activity = parseFloat(document.querySelector('input[name="activity"]:checked').value);
+  const goal   = document.querySelector('input[name="goal"]:checked').value;
+
+  if (!age || !height || !weight || age < 10 || height < 100 || weight < 30) {
+    alert('Zəhmət olmasa bütün sahələri düzgün doldurun.');
+    return;
+  }
+
+  // Mifflin-St Jeor BMR
+  let bmr;
+  if (gender === 'male') {
+    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+  } else {
+    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+  }
+
+  const tdee = bmr * activity;
+
+  let calories, goalLabel, proteinRatio, carbRatio, fatRatio;
+
+  if (goal === 'lose') {
+    calories = tdee - 500;
+    goalLabel = '−500 kkal (arıqlama)';
+    proteinRatio = 0.35;
+    carbRatio    = 0.40;
+    fatRatio     = 0.25;
+  } else if (goal === 'gain') {
+    calories = tdee + 300;
+    goalLabel = '+300 kkal (kütlə qazanma)';
+    proteinRatio = 0.30;
+    carbRatio    = 0.50;
+    fatRatio     = 0.20;
+  } else {
+    calories = tdee;
+    goalLabel = 'Dəyişiklik yoxdur';
+    proteinRatio = 0.30;
+    carbRatio    = 0.45;
+    fatRatio     = 0.25;
+  }
+
+  calories = Math.round(calories);
+  const protein = Math.round((calories * proteinRatio) / 4);
+  const carbs   = Math.round((calories * carbRatio)    / 4);
+  const fat     = Math.round((calories * fatRatio)     / 9);
+
+  // Show results
+  document.getElementById('placeholder').style.display = 'none';
+  const r = document.getElementById('results');
+  r.classList.add('show');
+
+  document.getElementById('calNum').textContent = calories.toLocaleString();
+  document.getElementById('proteinVal').innerHTML = protein + '<span> q/gün</span>';
+  document.getElementById('carbVal').innerHTML    = carbs   + '<span> q/gün</span>';
+  document.getElementById('fatVal').innerHTML     = fat     + '<span> q/gün</span>';
+
+  document.getElementById('bmrVal').textContent  = Math.round(bmr) + ' kkal';
+  document.getElementById('tdeeVal').textContent = Math.round(tdee) + ' kkal';
+  document.getElementById('goalVal').textContent = goalLabel;
+
+  // Animate bars (relative to each other, max=100%)
+  const maxMacro = Math.max(protein, carbs, fat);
+  setTimeout(() => {
+    document.getElementById('proteinBar').style.width = (protein / maxMacro * 100) + '%';
+    document.getElementById('carbBar').style.width    = (carbs   / maxMacro * 100) + '%';
+    document.getElementById('fatBar').style.width     = (fat     / maxMacro * 100) + '%';
+  }, 100);
+
+  // Tip
+  const tips = {
+    lose: `<strong>Arıqlama üçün:</strong> Gündə ən azı <strong>${protein}q protein</strong> ye — əzələ itkisinin qarşısını alır. Su içməyi unutma (gündə 2-3L). Gecə karbohidratı azalt.`,
+    maintain: `<strong>Formanı saxlamaq üçün:</strong> Makrolarını izlə və ardıcıl ol. <strong>${protein}q protein</strong> əzələ qoruyur. İdman günləri karbohidratı artır.`,
+    gain: `<strong>Kütlə qazanmaq üçün:</strong> İdmandan 1-2 saat əvvəl karbohidrat ye. Məşqdən sonra <strong>${Math.round(protein*0.3)}q protein</strong> qəbul et. Yatmazdan əvvəl kazein protein tövsiyə olunur.`
+  };
+  document.getElementById('tipText').innerHTML = tips[goal];
+
+  // Re-animate
+  r.querySelectorAll('.animate').forEach((el, i) => {
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = `fadeUp 0.5s ease ${i * 0.1}s forwards`;
+  });
+}
+</script>
+
+</body>
+</html>
