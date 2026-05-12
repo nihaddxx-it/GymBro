@@ -256,15 +256,16 @@
             #logo {
                 position: static;
                 display: block;
-                height: 70px;
-                margin: 10px auto 0;
+                height: 65px;
+                margin: 12px auto 0;
             }
 
             .auth-links {
                 position: static !important;
                 justify-content: center !important;
                 padding: 8px 16px !important;
-                margin-bottom: 8px;
+                margin: 6px auto;
+                width: fit-content;
             }
 
             ul {
@@ -272,44 +273,72 @@
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 6px;
-                padding: 0 10px;
+                padding: 0 12px;
+                margin: 8px 0;
             }
 
             li {
-                font-size: 15px;
+                font-size: 13px;
                 margin: 0;
                 padding: 5px 10px;
             }
 
             .products-section {
-                padding: 40px 16px 100px;
+                padding: 30px 12px 80px;
+                box-sizing: border-box;
+                width: 100%;
+            }
+
+            .products-section h2 {
+                font-size: 1.1rem;
+                background: rgba(0,0,0,0.45);
+                display: inline-block;
+                padding: 6px 16px;
+                border-radius: 8px;
+                letter-spacing: 1px;
+                color: #fff;
+                margin-bottom: 24px;
             }
 
             .products-grid {
                 flex-direction: column;
                 align-items: center;
-                gap: 24px;
+                gap: 20px;
+                width: 100%;
             }
 
             .product-card {
-                width: 85vw;
-                max-width: 340px;
-                padding: 20px 16px;
+                width: calc(100vw - 32px);
+                max-width: 360px;
+                padding: 16px 12px;
+                box-sizing: border-box;
             }
 
             .product-card img {
-                width: 180px;
-                height: 210px;
+                width: 140px;
+                height: 160px;
+            }
+
+            .product-card h3 {
+                font-size: 1rem;
+            }
+
+            .product-card .price {
+                font-size: 1.1rem;
             }
 
             .modal-box {
-                padding: 20px 16px;
-                width: 92%;
+                padding: 20px 14px;
+                width: 94%;
             }
 
             .modal-box img {
-                width: 160px;
-                height: 185px;
+                width: 140px;
+                height: 160px;
+            }
+
+            .modal-box h2 {
+                font-size: 1.1rem;
             }
 
             .modal-buttons {
