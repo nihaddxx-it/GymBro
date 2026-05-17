@@ -158,7 +158,7 @@
       color: var(--muted);
       margin-bottom: 8px;
     }
-    input[type="number"] {
+    input[type="number"], input[type="text"] {
       width: 100%;
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -170,10 +170,10 @@
       outline: none;
       transition: border-color 0.2s;
     }
-    input[type="number"]:focus {
+    input[type="number"]:focus, input[type="text"]:focus {
       border-color: var(--accent);
     }
-    input[type="number"]::placeholder { color: #444; }
+    input[type="number"]::placeholder, input[type="text"]::placeholder { color: #444; }
 
     .radio-group {
       display: flex;
@@ -220,15 +220,12 @@
       cursor: pointer;
       margin-top: 8px;
       transition: all 0.2s;
-      position: relative;
-      overflow: hidden;
     }
     .btn:hover {
       background: #c1121f;
       transform: translateY(-1px);
       box-shadow: 0 8px 24px rgba(230,57,70,0.35);
     }
-    .btn:active { transform: translateY(0); }
 
     /* RESULTS */
     .results {
@@ -248,7 +245,6 @@
     .result-placeholder .icon { font-size: 48px; margin-bottom: 16px; }
     .result-placeholder p { color: var(--muted); font-size: 14px; line-height: 1.6; }
 
-    /* Calorie big card */
     .cal-card {
       background: linear-gradient(135deg, #1a0a0b 0%, #2d1010 100%);
       border: 1px solid rgba(230,57,70,0.3);
@@ -256,15 +252,6 @@
       padding: 28px;
       text-align: center;
       position: relative;
-      overflow: hidden;
-    }
-    .cal-card::before {
-      content: '';
-      position: absolute;
-      top: -40px; right: -40px;
-      width: 150px; height: 150px;
-      background: rgba(230,57,70,0.08);
-      border-radius: 50%;
     }
     .cal-label {
       font-size: 11px;
@@ -281,22 +268,15 @@
       line-height: 1;
       letter-spacing: 2px;
     }
-    .cal-unit {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 6px;
-    }
+    .cal-unit { font-size: 13px; color: var(--muted); margin-top: 6px; }
 
-    /* Macro bars */
     .macro-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 24px 28px;
     }
-    .macro-item {
-      margin-bottom: 20px;
-    }
+    .macro-item { margin-bottom: 20px; }
     .macro-item:last-child { margin-bottom: 0; }
     .macro-header {
       display: flex;
@@ -304,38 +284,13 @@
       align-items: baseline;
       margin-bottom: 8px;
     }
-    .macro-name {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    .macro-val {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
-      letter-spacing: 1px;
-    }
-    .macro-val span {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--muted);
-      letter-spacing: 0;
-    }
-    .bar-bg {
-      height: 6px;
-      background: var(--surface2);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    .bar-fill {
-      height: 100%;
-      border-radius: 10px;
-      transition: width 0.8s cubic-bezier(0.16,1,0.3,1);
-      width: 0%;
-    }
+    .macro-name { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+    .macro-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1px; }
+    .macro-val span { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--muted); }
+    
+    .bar-bg { height: 6px; background: var(--surface2); border-radius: 10px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 10px; transition: width 0.8s ease; width: 0%; }
 
-    /* Tip card */
     .tip-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -343,13 +298,11 @@
       padding: 20px 24px;
       display: flex;
       gap: 14px;
-      align-items: flex-start;
     }
-    .tip-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+    .tip-icon { font-size: 24px; }
     .tip-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
     .tip-text strong { color: var(--text); }
 
-    /* BMR info */
     .bmr-row {
       display: flex;
       justify-content: space-between;
@@ -361,7 +314,24 @@
     .bmr-row:last-child { border-bottom: none; }
     .bmr-row strong { color: var(--text); }
 
-    /* animate in */
+    /* Cədvəl */
+    table td { padding: 14px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .action-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      margin-left: 6px;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
+    .btn-delete { background: #331111; color: #ff4444; border-color: #552222; }
+    .btn-edit { background: #112233; color: #44aaff; border-color: #223355; }
+    .btn-delete:hover { background: #551111; }
+    .btn-edit:hover { background: #113355; }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -377,17 +347,21 @@
 </nav>
 
 <div class="hero">
-  <div class="hero-tag">Pulsuz Alət</div>
+  <div class="hero-tag">Qüsursuz Makro Balansı</div>
   <h1>MACRO <span>ÖLÇƏR</span></h1>
-  <p>Gündəlik kalori və makro qida dəyərlərini hesabla. Məqsədinə uyğun yemək planı qur.</p>
+  <p>Karbohidratı şişirtmədən, təmiz əzələ kütləsi (Lean Bulk) və dəqiq defisit üçün yenilənmiş professional alət.</p>
 </div>
 
 <div class="container">
   <div class="calculator-grid">
 
-    <!-- FORM -->
     <div class="card">
       <div class="card-title"><div class="dot"></div> Məlumatlarını Daxil Et</div>
+
+      <div class="form-group">
+        <label>Ad</label>
+        <input type="text" id="name" placeholder="Adınızı daxil edin">
+      </div>
 
       <div class="form-group">
         <label>Cins</label>
@@ -401,7 +375,7 @@
 
       <div class="form-group">
         <label>Yaş</label>
-        <input type="number" id="age" placeholder="məs: 25" min="10" max="100">
+        <input type="number" id="age" placeholder="məs: 18" min="10" max="100">
       </div>
 
       <div class="form-group">
@@ -411,22 +385,20 @@
 
       <div class="form-group">
         <label>Çəki (kq)</label>
-        <input type="number" id="weight" placeholder="məs: 75" min="30" max="300">
+        <input type="number" id="weight" placeholder="məs: 67" min="30" max="300">
       </div>
 
       <div class="form-group">
         <label>Aktivlik Səviyyəsi</label>
         <div class="radio-group" style="flex-direction: column;">
           <input type="radio" name="activity" id="a1" value="1.2" checked>
-          <label for="a1" style="min-width:unset; text-align:left; padding: 10px 14px;">Oturaq (idmansız)</label>
+          <label for="a1" style="min-width:unset; text-align:left; padding: 10px 14px;">Oturaq (idmansız həyat)</label>
           <input type="radio" name="activity" id="a2" value="1.375">
-          <label for="a2" style="min-width:unset; text-align:left; padding: 10px 14px;">Az aktiv (həftədə 1-3 gün)</label>
+          <label for="a2" style="min-width:unset; text-align:left; padding: 10px 14px;">Az aktiv (həftədə 1-3 gün yüngül məşq)</label>
           <input type="radio" name="activity" id="a3" value="1.55">
-          <label for="a3" style="min-width:unset; text-align:left; padding: 10px 14px;">Orta aktiv (həftədə 3-5 gün)</label>
+          <label for="a3" style="min-width:unset; text-align:left; padding: 10px 14px;">Orta aktiv (həftədə 3-5 gün nizamlı fitnes)</label>
           <input type="radio" name="activity" id="a4" value="1.725">
-          <label for="a4" style="min-width:unset; text-align:left; padding: 10px 14px;">Çox aktiv (həftədə 6-7 gün)</label>
-          <input type="radio" name="activity" id="a5" value="1.9">
-          <label for="a5" style="min-width:unset; text-align:left; padding: 10px 14px;">Atlet / Ağır iş</label>
+          <label for="a4" style="min-width:unset; text-align:left; padding: 10px 14px;">Çox aktiv (həftədə 6-7 gün ağır idman)</label>
         </div>
       </div>
 
@@ -434,30 +406,26 @@
         <label>Məqsəd</label>
         <div class="radio-group">
           <input type="radio" name="goal" id="lose" value="lose">
-          <label for="lose">Arıqla</label>
+          <label for="lose">Arıqla (Defisit)</label>
           <input type="radio" name="goal" id="maintain" value="maintain" checked>
-          <label for="maintain">Saxla</label>
+          <label for="maintain">Eyni Saxla</label>
           <input type="radio" name="goal" id="gain" value="gain">
-          <label for="gain">Kütlə qaz</label>
+          <label for="gain">Kütlə (Lean Bulk)</label>
         </div>
       </div>
 
       <button class="btn" onclick="calculate()">HESABLA</button>
     </div>
 
-    <!-- RESULTS -->
     <div>
-      <!-- placeholder -->
       <div class="result-placeholder" id="placeholder">
-        <div class="icon">🧮</div>
-        <p>Məlumatlarını doldur və <strong style="color:var(--text)">HESABLA</strong> düyməsinə bas.<br>Gündəlik makro dəyərlərin burada görünəcək.</p>
+        <div class="icon">🎯</div>
+        <p>Məlumatlarını doldur və <strong style="color:var(--text)">HESABLA</strong> düyməsinə bas.<br>Optimallaşdırılmış makroların burada göstəriləcək.</p>
       </div>
 
-      <!-- actual results -->
       <div class="results" id="results">
-
         <div class="cal-card animate" id="calCard">
-          <div class="cal-label">Gündəlik Kalori</div>
+          <div class="cal-label">Gündəlik Hədəf Kalori</div>
           <div class="cal-number" id="calNum">—</div>
           <div class="cal-unit">kkal / gün</div>
         </div>
@@ -465,21 +433,21 @@
         <div class="macro-card animate" style="animation-delay:0.1s">
           <div class="macro-item">
             <div class="macro-header">
-              <div class="macro-name" style="color:var(--protein)">Protein</div>
+              <div class="macro-name" style="color:var(--protein)">Protein (Əzələ Qoruyucu)</div>
               <div class="macro-val" style="color:var(--protein)" id="proteinVal">—<span> q/gün</span></div>
             </div>
             <div class="bar-bg"><div class="bar-fill" id="proteinBar" style="background:var(--protein)"></div></div>
           </div>
           <div class="macro-item">
             <div class="macro-header">
-              <div class="macro-name" style="color:var(--carb)">Karbohidrat</div>
+              <div class="macro-name" style="color:var(--carb)">Karbohidrat (Təmiz Enerji)</div>
               <div class="macro-val" style="color:var(--carb)" id="carbVal">—<span> q/gün</span></div>
             </div>
             <div class="bar-bg"><div class="bar-fill" id="carbBar" style="background:var(--carb)"></div></div>
           </div>
           <div class="macro-item">
             <div class="macro-header">
-              <div class="macro-name" style="color:var(--fat)">Yağ</div>
+              <div class="macro-name" style="color:var(--fat)">Sağlam Yağ (Hormonal Balans)</div>
               <div class="macro-val" style="color:var(--fat)" id="fatVal">—<span> q/gün</span></div>
             </div>
             <div class="bar-bg"><div class="bar-fill" id="fatBar" style="background:var(--fat)"></div></div>
@@ -487,24 +455,49 @@
         </div>
 
         <div class="macro-card animate" style="animation-delay:0.2s" id="bmrInfo">
-          <div class="bmr-row"><span>Bazal Metabolizm (BMR)</span><strong id="bmrVal">—</strong></div>
-          <div class="bmr-row"><span>Aktivlikə görə kalori (TDEE)</span><strong id="tdeeVal">—</strong></div>
-          <div class="bmr-row"><span>Məqsəd korreksiyası</span><strong id="goalVal">—</strong></div>
+          <div class="bmr-row"><span>BMR (Orqanizmin minimal xərci)</span><strong id="bmrVal">—</strong></div>
+          <div class="bmr-row"><span>TDEE (Aktivlik daxil balans kalori)</span><strong id="tdeeVal">—</strong></div>
+          <div class="bmr-row"><span>Məqsəd rejimi</span><strong id="goalVal">—</strong></div>
         </div>
 
         <div class="tip-card animate" style="animation-delay:0.3s" id="tipCard">
-          <div class="tip-icon">💡</div>
+          <div class="tip-icon">✨</div>
           <div class="tip-text" id="tipText">—</div>
         </div>
-
       </div>
     </div>
 
   </div>
+
+  <div class="card" style="margin-top: 30px; grid-column: 1 / -1; width: 100%;">
+    <div class="card-title"><div class="dot" style="background: var(--carb);"></div> Hesablama Tarixçəsi</div>
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; color: var(--text); font-size: 14px; text-align: left;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--border); color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">
+            <th style="padding: 12px;">Ad</th>
+            <th style="padding: 12px;">Göstəricilər</th>
+            <th style="padding: 12px;">Məqsəd</th>
+            <th style="padding: 12px; color: var(--cal);">Kalori</th>
+            <th style="padding: 12px;">P / K / Y (q)</th>
+            <th style="padding: 12px; text-align: right;">Əməliyyatlar</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 
 <script>
+let macroHistory = JSON.parse(localStorage.getItem('gymbro_macros')) || [];
+let editIndex = -1; 
+
+document.addEventListener('DOMContentLoaded', updateTable);
+
 function calculate() {
+  const name   = document.getElementById('name').value.trim();
   const gender = document.querySelector('input[name="gender"]:checked').value;
   const age    = parseFloat(document.getElementById('age').value);
   const height = parseFloat(document.getElementById('height').value);
@@ -512,84 +505,174 @@ function calculate() {
   const activity = parseFloat(document.querySelector('input[name="activity"]:checked').value);
   const goal   = document.querySelector('input[name="goal"]:checked').value;
 
+  if (!name) {
+    alert('Zəhmət olmasa bir ad daxil edin.');
+    return;
+  }
   if (!age || !height || !weight || age < 10 || height < 100 || weight < 30) {
     alert('Zəhmət olmasa bütün sahələri düzgün doldurun.');
     return;
   }
 
-  // Mifflin-St Jeor BMR
-  let bmr;
-  if (gender === 'male') {
-    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-  } else {
-    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
-  }
+  // BMR (Mifflin-St Jeor)
+  let bmr = (gender === 'male') 
+    ? (10 * weight + 6.25 * height - 5 * age + 5)
+    : (10 * weight + 6.25 * height - 5 * age - 161);
 
   const tdee = bmr * activity;
-
-  let calories, goalLabel, proteinRatio, carbRatio, fatRatio;
+  let calories, goalLabel;
 
   if (goal === 'lose') {
-    calories = tdee - 500;
-    goalLabel = '−500 kkal (arıqlama)';
-    proteinRatio = 0.35;
-    carbRatio    = 0.40;
-    fatRatio     = 0.25;
+    calories = tdee - 400;
+    goalLabel = 'Arıqlama';
   } else if (goal === 'gain') {
-    calories = tdee + 300;
-    goalLabel = '+300 kkal (kütlə qazanma)';
-    proteinRatio = 0.30;
-    carbRatio    = 0.50;
-    fatRatio     = 0.20;
+    calories = tdee + 350; 
+    goalLabel = 'Kütlə qazanma';
   } else {
     calories = tdee;
-    goalLabel = 'Dəyişiklik yoxdur';
-    proteinRatio = 0.30;
-    carbRatio    = 0.45;
-    fatRatio     = 0.25;
+    goalLabel = 'Çəki saxlama';
+  }
+  calories = Math.round(calories);
+
+  // OPTİMAL İDMANÇI MAKRO STRATEGİYASI:
+  // 1. Protein: Sabit bədən çəkisinə görə 2.2 qram (67kq üçün = ~147q)
+  const protein = Math.round(weight * 2.2); 
+  const proteinKcal = protein * 4;
+
+  // 2. Karbohidrat: Şişmənin tam qarşısını alan qoruyucu əmsallar (Hədəf çəki * optimal qram)
+  let carbsPerKg = 3.5; // Çəki saxlama üçün
+  if (goal === 'lose') {
+    carbsPerKg = 2.0;  // Arıqlama dövrü üçün aşağı karbohidrat
+  } else if (goal === 'gain') {
+    // Əgər aktivlik çoxdursa karbohidratı 3.8, azdırsa 3.5 səviyyəsində limitləyirik (390q rəqəmi tamamilə ləğv olundu)
+    carbsPerKg = activity >= 1.55 ? 3.8 : 3.5; 
+  }
+  const carbs = Math.round(weight * carbsPerKg);
+  const carbsKcal = carbs * 4;
+
+  // 3. Sağlam Yağlar: Qalan kalori ehtiyacı təmiz enerji və hormonal sağlamlıq üçün yağlara verilir
+  let remainingKcal = calories - (proteinKcal + carbsKcal);
+  let fat = Math.round(remainingKcal / 9);
+
+  // Yağ üçün minimum qoruyucu alt limit (kq başına min 0.8q)
+  const minFat = Math.round(weight * 0.8);
+  if (fat < minFat) {
+    fat = minFat;
   }
 
-  calories = Math.round(calories);
-  const protein = Math.round((calories * proteinRatio) / 4);
-  const carbs   = Math.round((calories * carbRatio)    / 4);
-  const fat     = Math.round((calories * fatRatio)     / 9);
+  // Makroların cəminə görə real son kalori sinxronizasiyası
+  const finalCalories = (protein * 4) + (carbs * 4) + (fat * 9);
 
-  // Show results
+  const record = {
+    name, gender, age, height, weight, activity, goal, 
+    calories: finalCalories, protein, carbs, fat, bmr: Math.round(bmr), tdee: Math.round(tdee), goalLabel
+  };
+
+  if (editIndex === -1) {
+    macroHistory.push(record);
+  } else {
+    macroHistory[editIndex] = record;
+    editIndex = -1; 
+    document.querySelector('.btn').textContent = "HESABLA";
+  }
+
+  localStorage.setItem('gymbro_macros', JSON.stringify(macroHistory));
+  updateTable();
+  showVisualResults(record);
+  
+  document.getElementById('name').value = '';
+}
+
+function showVisualResults(data) {
   document.getElementById('placeholder').style.display = 'none';
   const r = document.getElementById('results');
   r.classList.add('show');
 
-  document.getElementById('calNum').textContent = calories.toLocaleString();
-  document.getElementById('proteinVal').innerHTML = protein + '<span> q/gün</span>';
-  document.getElementById('carbVal').innerHTML    = carbs   + '<span> q/gün</span>';
-  document.getElementById('fatVal').innerHTML     = fat     + '<span> q/gün</span>';
+  document.getElementById('calNum').textContent = data.calories.toLocaleString();
+  document.getElementById('proteinVal').innerHTML = data.protein + '<span> q/gün</span>';
+  document.getElementById('carbVal').innerHTML    = data.carbs   + '<span> q/gün</span>';
+  document.getElementById('fatVal').innerHTML     = data.fat     + '<span> q/gün</span>';
 
-  document.getElementById('bmrVal').textContent  = Math.round(bmr) + ' kkal';
-  document.getElementById('tdeeVal').textContent = Math.round(tdee) + ' kkal';
-  document.getElementById('goalVal').textContent = goalLabel;
+  document.getElementById('bmrVal').textContent  = data.bmr + ' kkal';
+  document.getElementById('tdeeVal').textContent = data.tdee + ' kkal';
+  document.getElementById('goalVal').textContent = data.goalLabel;
 
-  // Animate bars (relative to each other, max=100%)
-  const maxMacro = Math.max(protein, carbs, fat);
+  const maxMacro = Math.max(data.protein, data.carbs, data.fat);
   setTimeout(() => {
-    document.getElementById('proteinBar').style.width = (protein / maxMacro * 100) + '%';
-    document.getElementById('carbBar').style.width    = (carbs   / maxMacro * 100) + '%';
-    document.getElementById('fatBar').style.width     = (fat     / maxMacro * 100) + '%';
+    document.getElementById('proteinBar').style.width = (data.protein / maxMacro * 100) + '%';
+    document.getElementById('carbBar').style.width    = (data.carbs   / maxMacro * 100) + '%';
+    document.getElementById('fatBar').style.width     = (data.fat     / maxMacro * 100) + '%';
   }, 100);
 
-  // Tip
   const tips = {
-    lose: `<strong>Arıqlama üçün:</strong> Gündə ən azı <strong>${protein}q protein</strong> ye — əzələ itkisinin qarşısını alır. Su içməyi unutma (gündə 2-3L). Gecə karbohidratı azalt.`,
-    maintain: `<strong>Formanı saxlamaq üçün:</strong> Makrolarını izlə və ardıcıl ol. <strong>${protein}q protein</strong> əzələ qoruyur. İdman günləri karbohidratı artır.`,
-    gain: `<strong>Kütlə qazanmaq üçün:</strong> İdmandan 1-2 saat əvvəl karbohidrat ye. Məşqdən sonra <strong>${Math.round(protein*0.3)}q protein</strong> qəbul et. Yatmazdan əvvəl kazein protein tövsiyə olunur.`
+    lose: `<strong>Dəqiq Defisit:</strong> Karbohidrat aşağı salındı (${data.carbs}q). Yüksək protein əzələni qoruyacaq. Yağ yandırılması üçün idealdır.`,
+    maintain: `<strong>Balans Dövrü:</strong> Enerjin stabil qalacaq, çəkin dəyişməyəcək. Formanı qorumaq üçün tam ideal makrolardır.`,
+    gain: `<strong>Təmiz Əzələ (Lean Bulk):</strong> Karbohidratı şişirdib yağlanmaq yerinə, optimal limitdə saxladıq (${data.carbs}q). Qalan enerji sağlam yağlarla dəstəkləndi!`
   };
-  document.getElementById('tipText').innerHTML = tips[goal];
+  document.getElementById('tipText').innerHTML = tips[data.goal] || tips['maintain'];
 
-  // Re-animate
   r.querySelectorAll('.animate').forEach((el, i) => {
     el.style.animation = 'none';
     el.offsetHeight;
     el.style.animation = `fadeUp 0.5s ease ${i * 0.1}s forwards`;
   });
+}
+
+function updateTable() {
+  const tbody = document.getElementById('historyBody');
+  tbody.innerHTML = '';
+
+  if (macroHistory.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--muted); padding:20px;">Hələ heç bir hesablama qeydi yoxdur.</td></tr>`;
+    return;
+  }
+
+  macroHistory.forEach((item, index) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td style="font-weight:600; color:var(--text);">${item.name}</td>
+      <td style="color:var(--muted); font-size:13px;">${item.gender === 'male' ? 'Kişi' : 'Qadın'}, ${item.age} yaş<br>${item.weight} kq / ${item.height} sm</td>
+      <td><span style="font-size:12px; background:var(--surface2); padding:4px 8px; border-radius:6px; border:1px solid var(--border);">${item.goalLabel}</span></td>
+      <td style="font-family:'Bebas Neue', sans-serif; font-size:18px; color:var(--accent); letter-spacing:1px;">${item.calories} kkal</td>
+      <td style="font-size:13px;"><span style="color:var(--protein)">${item.protein}q</span> / <span style="color:var(--carb)">${item.carbs}q</span> / <span style="color:var(--fat)">${item.fat}q</span></td>
+      <td style="text-align: right;">
+        <button class="action-btn btn-edit" onclick="editRecord(${index})">Dəyiş</button>
+        <button class="action-btn btn-delete" onclick="deleteRecord(${index})">Sil</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+function deleteRecord(index) {
+  if (confirm(`${macroHistory[index].name} adlı qeydi silmək istədiyinizə əminsiniz?`)) {
+    macroHistory.splice(index, 1);
+    localStorage.setItem('gymbro_macros', JSON.stringify(macroHistory));
+    updateTable();
+  }
+}
+
+function editRecord(index) {
+  const item = macroHistory[index];
+  
+  document.getElementById('name').value = item.name;
+  document.getElementById('age').value = item.age;
+  document.getElementById('height').value = item.height;
+  document.getElementById('weight').value = item.weight;
+  
+  document.getElementById(item.gender).checked = true;
+  document.getElementById(item.goal).checked = true;
+  
+  const activityRadios = document.querySelectorAll('input[name="activity"]');
+  activityRadios.forEach(radio => {
+    if (parseFloat(radio.value) === item.activity) {
+      radio.checked = true;
+    }
+  });
+
+  editIndex = index;
+  document.querySelector('.btn').textContent = "YENİLƏ / YADDA SAXLA";
+  window.scrollTo({ top: 150, behavior: 'smooth' });
 }
 </script>
 
